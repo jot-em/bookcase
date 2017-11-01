@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+
+<html>
+
+	<head>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
+		<link rel="stylesheet" href="{% static 'css/biblio.css' %}">
+		<title>Biblioteczka</title>
+
+		<div class="menu">
+			<a href="{% url 'book_list' %}" class="icon-menu"><span class="glyphicon glyphicon-home"></span></a>
+			<a href="{% url 'book_new' %}" class="icon-menu"><span class="glyphicon glyphicon-plus"></span></a>
+			<a href="{% url 'book_table' %}" class="icon-menu"><span class="glyphicon glyphicon-th-list"></span></a>
+			<a href="{% url 'book_list' %}" class="icon-menu"><span class="glyphicon glyphicon-search"></span></a>
+			<a href="{% url 'book_edit' %}" class="icon-menu"><span class="glyphicon glyphicon-pencil"></span></a>
+			<a href="{% url 'book_list' %}" class="icon-menu"><span class="glyphicon glyphicon-trash"></span></a>
+		</div>
+	</head>
+
+	<body>
+	    <div class="page-header">
+	        <h1><a href="/">Domowa Biblioteczka</a></h1>
+	    </div>
+
+	    <div class="content container">
+	        <div class="row">
+	            <div class="col-md-8">
+	            {% block content %}
+	            {% endblock %}
+	            </div>
+	        </div>
+	    </div>
+	</body>
+</html>

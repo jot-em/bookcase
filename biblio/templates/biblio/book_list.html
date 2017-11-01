@@ -1,0 +1,16 @@
+{% extends 'biblio/base.html' %}
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+	{% for book in book_list %}
+	    <div class="book-list">
+			<p>{{ book.author }}</p>
+			<h1><a href="{% url 'book_details' pk=book.pk %}">{{ book.title }}</a></h1>
+			<br>
+	    </div>
+	{% endfor %}
+{% endblock %}
+
+
+

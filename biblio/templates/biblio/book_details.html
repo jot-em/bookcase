@@ -1,0 +1,13 @@
+{% extends 'biblio/extended.html' %}
+
+{% block content %}
+	<div class="book">
+		<h1>{{ book.author }} ,,<i>{{ book.title }}''</i></h1>
+		<h2>Gatunek</h2>
+		<p>{{ book.kind }}</p>
+		<h2>Kategoria</h2>
+		<p>{{ book.category }}</p>
+		<h2>Notatki</h2>
+		<p>{{ book.notes }}</p>
+	</div>
+{% endblock %}

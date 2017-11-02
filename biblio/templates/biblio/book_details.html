@@ -1,13 +1,69 @@
 {% extends 'biblio/extended.html' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% block content %}
 	<div class="book">
-		<h1>{{ book.author }} ,,<i>{{ book.title }}''</i></h1>
+		
+		<h1 class="book-title">{{ book.author }} ,,<i>{{ book.title }}''</i></h1>
+		
 		<h2>Gatunek</h2>
 		<p>{{ book.kind }}</p>
+		
 		<h2>Kategoria</h2>
 		<p>{{ book.category }}</p>
+		
+		{% if book.category == "library" %}
+			<h2>Data wypożyczenia</h2>
+			{% if book.loan_date == None %}
+				<p>Nie podano</p>
+			{% else %}
+				<p>{{ book.loan_date }}</p>
+			{% endif %}
+			
+			<h2>Data oddania</h2>
+			{% if book.due_date == None %}
+				<p>Nie podano</p>
+			{% else %}
+				<p>{{ book.due_date }}</p>
+			{% endif %}
+		{% endif %}
+		
 		<h2>Notatki</h2>
 		<p>{{ book.notes }}</p>
+
+		<h2>Ocena</h2>
+		{% if book.mark == '0' %}	
+			<p>Jeszcze nie oceniono</p>
+		{% elif book.mark == '1' %}
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+		{% elif book.mark == '2' %}
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+		{% elif book.mark == '3' %}
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+			<span class="fa fa-star"></span>
+		{% elif book.mark == '4' %}
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star"></span>
+		{% elif book.mark == '5' %}
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			<span class="fa fa-star checked"></span>
+			{% endif %}
 	</div>
 {% endblock %}

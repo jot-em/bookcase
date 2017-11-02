@@ -1,7 +1,7 @@
 {% extends 'biblio/base.html' %}
 
 {% block content %}
-	<h1>Dodaj książkę</h1>
+	<h1 class="title">Dodaj książkę</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Zapisz</button>

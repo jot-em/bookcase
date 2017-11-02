@@ -50,4 +50,4 @@ def book_delete(request, pk):
     deleting_book = Book.objects.filter(pk=pk).delete()
     books = Book.objects.all().order_by('author')
     deleted = True
-    return render(request, 'blog/book_list.html', {'book_list': books, 'deleted':deleted})
+    return render(request, 'biblio/book_list.html', {'book_list': books, 'deleted':deleted})

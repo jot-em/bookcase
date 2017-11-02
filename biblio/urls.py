@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^wykaz/$', views.book_table, name='book_table'),
 	url(r'^ksiazki/(?P<pk>[0-9]+)/', views.book_details, name='book_details'),
 	url(r'^ksiazki/dodaj/$', views.book_new, name = 'book_new'),
-	url(r'^ksiazki/edytuj/$', views.book_edit, name = 'book_edit'),
+	url(r'^ksiazki/edytuj/(?P<pk>[0-9]+)/$', views.book_edit, name = 'book_edit'),
+	url(r'^ksiazki/usun/(?P<pk>[0-9]+)/$', views.book_delete, name = 'book_delete'),
 	# url(r'^szukaj/$', views.book_search, name='book_search'),
 ]

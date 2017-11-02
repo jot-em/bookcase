@@ -33,16 +33,21 @@ def book_new(request):
 		form = BookForm()
 	return render(request, 'biblio/book_new.html', {'form': form})
 
-def book_edit(request):
+def book_edit(request, pk):
+	book = get_object_or_404(Book, pk=pk)
 	if request.method == "POST":
-		form = BookForm(request.POST)
+		form = BookForm(request.POST, instance=book)
 		if form.is_valid():
 			book = form.save(commit=False)
 			book.created_date = timezone.now()
 			book.save()
 			return redirect('book_details', pk=book.pk)
 	else:
-		form = BookForm()
+		form = BookForm(instance=book)
 	return render(request, 'biblio/book_edit.html', {'form': form})
 
-
+def book_delete(request, pk):
+    deleting_book = Book.objects.filter(pk=pk).delete()
+    books = Book.objects.all().order_by('author')
+    deleted = True
+    return render(request, 'blog/book_list.html', {'book_list': books, 'deleted':deleted})

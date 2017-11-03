@@ -9,5 +9,5 @@ urlpatterns = [
 	url(r'^ksiazki/dodaj/$', views.book_new, name = 'book_new'),
 	url(r'^ksiazki/edytuj/(?P<pk>[0-9]+)/$', views.book_edit, name = 'book_edit'),
 	url(r'^ksiazki/usun/(?P<pk>[0-9]+)/$', views.book_delete, name = 'book_delete'),
-	# url(r'^szukaj/$', views.book_search, name='book_search'),
+	url(r'^szukaj/$', views.book_search, name='book_search'),
 ]

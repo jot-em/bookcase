@@ -51,3 +51,11 @@ def book_delete(request, pk):
     books = Book.objects.all().order_by('author')
     deleted = True
     return render(request, 'biblio/book_list.html', {'book_list': books, 'deleted':deleted})
+
+def book_search(request):
+	books = Book.objects.all().order_by('author')
+	if request.method == "GET":
+		search_author_query = request.GET.get('autor')
+		print(search_author_query)
+		books = Book.objects.filter(author=search_author_query)
+		return render(request, 'biblio/book_search.html', {'book_list': books})

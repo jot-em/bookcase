@@ -3,7 +3,7 @@ from django.utils import timezone
 from django_tables2 import RequestConfig
 from .models import Book
 from .tables import BookTable
-from .forms import BookForm
+from .forms import BookForm, BookSearchForm
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -53,9 +53,40 @@ def book_delete(request, pk):
     return render(request, 'biblio/book_list.html', {'book_list': books, 'deleted':deleted})
 
 def book_search(request):
+	form = BookSearchForm(request.GET)
 	books = Book.objects.all().order_by('author')
 	if request.method == "GET":
-		search_author_query = request.GET.get('autor')
-		print(search_author_query)
-		books = Book.objects.filter(author=search_author_query)
-		return render(request, 'biblio/book_search.html', {'book_list': books})
+		search_author_query = request.GET.get('author')
+		search_title_query = request.GET.get('title')
+		search_kind_query = request.GET.get('kind')
+		search_source_query = request.GET.get('source')
+		search_status_query = request.GET.get('status')
+		search_mark_query = request.GET.get('mark')
+		
+		filters = {}
+
+		if search_author_query != '':
+			filters['author'] = search_author_query
+
+		if search_title_query != '':
+			filters['title'] = search_title_query
+
+		if search_kind_query != '':
+			filters['kind'] = search_kind_query
+
+		if search_source_query != 'None':
+			filters['source'] = search_source_query
+
+		if search_status_query != 'None':
+			filters['status'] = search_status_query
+			
+		if search_mark_query != '0':
+			filters['mark'] = search_mark_query
+
+
+		print(filters)
+
+
+
+		books = Book.objects.filter(**filters)
+		return render(request, 'biblio/book_search.html', {'form': form, 'book_list': books})

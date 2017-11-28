@@ -12,7 +12,7 @@ class Book(models.Model):
             blank=True, null=True, verbose_name='Data wypożyczenia')
     due_date = models.DateTimeField(
             blank=True, null=True, verbose_name='Termin oddania')
-    SOURCE_CHOICES = (('home', 'Zasoby wlasne'), ('library', 'Biblioteka'), ('borrowed', 'Pożyczona od kogoś'), ('others', 'Inne'))
+    SOURCE_CHOICES = (('home', 'Zasoby wlasne'), ('library', 'Biblioteka'), ('borrowed', 'Pożyczona od kogoś'), ('others', 'Inne'),)
     source = models.CharField(max_length=200, default='Inne', verbose_name='Źródło')
     STATUS_CHOICES = (('todo', 'Chcę przeczytać'),('inprogress', 'Czytam'),('closed', 'Przeczytałam'))
     status = models.CharField(max_length=200, default = 'todo', verbose_name='Status')

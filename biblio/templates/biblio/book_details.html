@@ -10,21 +10,32 @@
 		<p>{{ book.kind }}</p>
 		
 		<h2>Kategoria</h2>
-		<p>{{ book.category }}</p>
+		<p>{{ book.source }}</p>
 		
-		{% if book.category == "library" %}
+		{% if book.source == "library" or book.source == "borrowed"%}
 			<h2>Data wypożyczenia</h2>
 			{% if book.loan_date == None %}
 				<p>Nie podano</p>
 			{% else %}
 				<p>{{ book.loan_date }}</p>
 			{% endif %}
+		{% endif %}
 			
-			<h2>Data oddania</h2>
+		{% if book.source == "library"%}
+			<h2>Termin oddania</h2>
 			{% if book.due_date == None %}
 				<p>Nie podano</p>
 			{% else %}
 				<p>{{ book.due_date }}</p>
+			{% endif %}
+		{% endif %}
+
+		{% if book.source == "library" or book.source == "borrowed"%}
+			{% if book.returned_date == None %}
+			<h2>Data oddania</h2>
+				<p>Jeszcze nie oddano</p>
+			{% else %}
+				<p>{{ book.returned_date }}</p>
 			{% endif %}
 		{% endif %}
 		

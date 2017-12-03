@@ -2,6 +2,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% block content %}
+
+
+
+	<script language="javascript" type="text/javascript">
+	<!--
+	function popitup(url) {
+		newwindow=window.open(url,'tttt', 'left=300,top=200,height=300,width=300');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+
+	// -->
+	</script>
+
 	<div class="book">
 		
 		<h1 class="book-title">{{ book.author }} ,,<i>{{ book.title }}''</i></h1>
@@ -10,7 +24,19 @@
 		<p>{{ book.kind }}</p>
 		
 		<h2>Kategoria</h2>
-		<p>{{ book.source }}</p>
+		{% if book.source == "home" %}
+			{% if book.lent_to == None %}
+				<p>{{ book.source }}<a href="pozycz" onclick="return popitup('pozycz')" class="icon-button"><span class="glyphicon glyphicon-share"></span></a></p>
+			{% else %}
+				<p>{{ book.source }}</p>
+				<h2>Osoba, która pożyczyła</h2>
+				<p>{{ book.lent_to }}<a href="przyjmij_zwrot" onclick="return popitup('przyjmij_zwrot')" class="icon-button"><span class="glyphicon glyphicon-check"></span></a></p>
+				<h2>Data pożyczenia</h2>
+				<p>{{ book.lent_date }}</p>
+			{% endif %}
+		{% else %}
+			<p>{{ book.source }}
+		{% endif %}
 		
 		{% if book.source == "library" or book.source == "borrowed"%}
 			<h2>Data wypożyczenia</h2>
@@ -31,9 +57,9 @@
 		{% endif %}
 
 		{% if book.source == "library" or book.source == "borrowed"%}
-			{% if book.returned_date == None %}
 			<h2>Data oddania</h2>
-				<p>Jeszcze nie oddano</p>
+			{% if book.returned_date == None %}
+				<p>Jeszcze nie oddano<a href="zwroc" onclick="return popitup('zwroc')" class="icon-button"><span class="glyphicon glyphicon-check"></span></a></p>
 			{% else %}
 				<p>{{ book.returned_date }}</p>
 			{% endif %}

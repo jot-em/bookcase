@@ -8,11 +8,17 @@ class Book(models.Model):
     kind = models.CharField(max_length=200, verbose_name='Gatunek')
     created_date = models.DateTimeField(
             default=timezone.now, verbose_name='Data dodania')
-    loan_date = models.DateTimeField(
+    loan_date = models.DateField(
             blank=True, null=True, verbose_name='Data wypożyczenia')
-    due_date = models.DateTimeField(
+    due_date = models.DateField(
             blank=True, null=True, verbose_name='Termin oddania')
     returned_date = models.DateTimeField(
+            blank=True, null=True, verbose_name='Data oddania')
+
+    lent_to =  models.CharField(blank=True, null=True, max_length=200, verbose_name='Osoba, która pożyczyła')
+    lent_date = models.DateTimeField(
+            blank=True, null=True, verbose_name='Data pożyczenia')
+    lent_back_date = models.DateTimeField(
             blank=True, null=True, verbose_name='Data oddania')
 
     SOURCE_CHOICES = (('home', 'Zasoby wlasne'), ('library', 'Biblioteka'), ('borrowed', 'Pożyczona od kogoś'), ('others', 'Inne'),)

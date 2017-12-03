@@ -7,7 +7,7 @@ class BookForm(forms.ModelForm):
 	mark = forms.ChoiceField(choices=Book.MARK_CHOICES, label='Jak oceniasz książkę?')
 	class Meta:
 		model = Book
-		fields = ('author', 'title', 'kind',  'source', 'loan_date', 'due_date','status', 'notes', 'mark')
+		fields = ('author', 'title', 'kind',  'source', 'loan_date', 'due_date', 'returned_date', 'status', 'notes', 'mark')
 
 class BookSearchForm(BookForm):
 	source = forms.ChoiceField(choices=(('None', ''),)+Book.SOURCE_CHOICES, label='Kategoria')
@@ -23,3 +23,22 @@ class BookSearchForm(BookForm):
 		self.fields['loan_date_from']=forms.DateField(label='Data wypożyczenia od')
 		for key, field in self.fields.items():
 			self.fields[key].required = False
+
+
+class BookLendForm(forms.ModelForm):
+	lent_to = forms.CharField(label='Komu pożyczasz?',required=True)
+	class Meta:
+		model = Book
+		fields = ('lent_to','lent_date',)
+
+class BookLendBackForm(forms.ModelForm):
+	lent_back_date = forms.DateTimeField(label='Data oddania',required=False)
+	class Meta:
+		model = Book
+		fields = ('lent_back_date',)
+
+class BookReturnForm(forms.ModelForm):
+	returned_date = forms.DateTimeField(label='Data oddania',required=False)
+	class Meta:
+		model = Book
+		fields = ('returned_date',)

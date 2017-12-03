@@ -3,7 +3,7 @@ from django.utils import timezone
 from django_tables2 import RequestConfig
 from .models import Book
 from .tables import BookTable
-from .forms import BookForm, BookSearchForm
+from .forms import *
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -83,10 +83,48 @@ def book_search(request):
 		if search_mark_query != '0':
 			filters['mark'] = search_mark_query
 
-
-		print(filters)
-
-
-
 		books = Book.objects.filter(**filters)
 		return render(request, 'biblio/book_search.html', {'form': form, 'book_list': books})
+
+def lend_book(request, pk):
+	book = get_object_or_404(Book, pk=pk)
+	if request.method == "POST":
+		form = BookLendForm(request.POST, instance=book)
+		if form.is_valid():
+			book = form.save(commit=False)
+			book.save()
+			return redirect('popup_lend_success', pk=book.pk)
+	else:
+		form = BookLendForm(instance=book, initial={'lent_date':timezone.now()})
+	return render(request, 'biblio/popup.html', {'form': form, 'title': 'Pożycz książkę'})
+
+def mark_return_book(request, pk):
+	book = get_object_or_404(Book, pk=pk)
+	if request.method == "POST":
+		form = BookLendBackForm(request.POST, instance=book)
+		if form.is_valid():
+			book = form.save(commit=False)
+			book.lent_to = None
+			book.save()
+			return redirect('popup_mark_return_success', pk=book.pk)
+	else:
+		form = BookLendBackForm(instance=book, initial={'lent_back_date':timezone.now()})
+	return render(request, 'biblio/popup.html', {'form': form, 'title': 'Zaznacz zwrot'})
+
+def return_book(request, pk):
+	book = get_object_or_404(Book, pk=pk)
+	if request.method == "POST":
+		form = BookReturnForm(request.POST, instance=book)
+		if form.is_valid():
+			book = form.save(commit=False)
+			book.save()
+			return redirect('popup_mark_return_success', pk=book.pk)
+	else:
+		form = BookReturnForm(instance=book, initial={'returned_date':timezone.now()})
+	return render(request, 'biblio/popup.html', {'form': form, 'title': 'Oddaj książkę'})
+
+def popup_lend_success(request, pk):
+	return render(request, 'biblio/popup_success.html', {'message': 'Książka została pożyczona!'})
+
+def popup_mark_return_success(request, pk):
+	return render(request, 'biblio/popup_success.html', {'message': 'Książka została zwrócona!'})

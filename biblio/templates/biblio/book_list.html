@@ -3,9 +3,9 @@
 
 
 {% block content %}
-	{% for book in book_list %}
+	{% for n, book in book_list.items %}
 	    <div class="book-list">
-			<p>{{ book.author }}</p>
+			<p>{{ n }}. {{ book.author }}</p>
 			<h1><a href="{% url 'book_details' pk=book.pk %}">{{ book.title }}</a></h1>
 			<br>
 	    </div>

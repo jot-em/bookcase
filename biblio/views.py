@@ -10,7 +10,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def book_list(request):
 	books = Book.objects.all().order_by('author')
-	return render(request, 'biblio/book_list.html', {'book_list': books})
+	book_dict = {}
+	i = 1
+	for el in books:
+		book_dict[i] = el
+		i += 1
+	return render(request, 'biblio/book_list.html', {'book_list': book_dict})
 
 def book_table(request):
 	table = BookTable(Book.objects.all())

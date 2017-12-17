@@ -7,10 +7,16 @@
 	    <div class="book-list">
 			<p>{{ n }}. {{ book.author }}</p>
 			<h1><a href="{% url 'book_details' pk=book.pk %}">{{ book.title }}</a></h1>
-			<br>
+
+			{% if book.notes != '' %}
+				<p>{{ book.notes|truncatechars:100 }}</p>
+			{% endif %}
+			<hr>
 	    </div>
 	{% endfor %}
 {% endblock %}
+
+
 
 
 

@@ -3,6 +3,9 @@
 
 
 {% block content %}
+
+	<h1 class="title">{{title}}</h1>
+
 	{% for n, book in book_list.items %}
 	    <div class="book-list">
 			<p>{{ n }}. {{ book.author }}</p>

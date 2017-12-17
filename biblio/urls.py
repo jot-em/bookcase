@@ -15,4 +15,5 @@ urlpatterns = [
 	url(r'^ksiazka/edytuj/(?P<pk>[0-9]+)/$', views.book_edit, name = 'book_edit'),
 	url(r'^ksiazka/usun/(?P<pk>[0-9]+)/$', views.book_delete, name = 'book_delete'),
 	url(r'^szukaj/$', views.book_search, name='book_search'),
+	url(r'^ksiazki/biblioteka$', views.book_library, name='book_library'),
 ]

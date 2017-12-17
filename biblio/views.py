@@ -15,7 +15,7 @@ def book_list(request):
 	for el in books:
 		book_dict[i] = el
 		i += 1
-	return render(request, 'biblio/book_list.html', {'book_list': book_dict})
+	return render(request, 'biblio/book_list.html', {'book_list': book_dict, 'title': 'Lista wszystkich książek'})
 
 def book_table(request):
 	table = BookTable(Book.objects.all())
@@ -133,3 +133,14 @@ def popup_lend_success(request, pk):
 
 def popup_mark_return_success(request, pk):
 	return render(request, 'biblio/popup_success.html', {'message': 'Książka została zwrócona!'})
+
+def book_library(request):
+	books = Book.objects.filter(source='library').order_by('author')
+	book_dict = {}
+	i = 1
+	for el in books:
+		book_dict[i] = el
+		i += 1
+	return render(request, 'biblio/book_list.html', {'book_list': book_dict, 'title': 'Lista książek z biblioteki'})
+
+

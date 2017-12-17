@@ -141,6 +141,9 @@ def book_library(request):
 	for el in books:
 		book_dict[i] = el
 		i += 1
-	return render(request, 'biblio/book_list.html', {'book_list': book_dict, 'title': 'Lista książek z biblioteki'})
+	empty_list = False
+	if len(books) == 0:
+		empty_list = True
+	return render(request, 'biblio/book_list.html', {'book_list': book_dict, 'title': 'Lista książek z biblioteki', 'empty_library_list': empty_list})
 
 

@@ -9,11 +9,15 @@
     	<button type="submit">Szukaj</button>
 	</form>
  
-	{% for book in book_list %}
+	{% for n, book in book_list.items %}
 	    <div class="book-list">
-			<p>{{ book.author }}</p>
+			<p>{{ n }}. {{ book.author }}</p>
 			<h1><a href="{% url 'book_details' pk=book.pk %}">{{ book.title }}</a></h1>
-			<br>
+
+			{% if book.notes != '' %}
+				<p>{{ book.notes|truncatechars:100 }}</p>
+			{% endif %}
+			<hr>
 	    </div>
 	{% endfor %}
 

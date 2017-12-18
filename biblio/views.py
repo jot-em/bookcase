@@ -4,18 +4,15 @@ from django_tables2 import RequestConfig
 from .models import Book
 from .tables import BookTable
 from .forms import *
+from .helpers import *
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def book_list(request):
 	books = Book.objects.all().order_by('author')
-	book_dict = {}
-	i = 1
-	for el in books:
-		book_dict[i] = el
-		i += 1
-	return render(request, 'biblio/book_list.html', {'book_list': book_dict, 'title': 'Lista wszystkich książek'})
+	numbered_books = helper_numbered_books_dict(books)
+	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista wszystkich książek'})
 
 def book_table(request):
 	table = BookTable(Book.objects.all())
@@ -54,8 +51,9 @@ def book_edit(request, pk):
 def book_delete(request, pk):
     deleting_book = Book.objects.filter(pk=pk).delete()
     books = Book.objects.all().order_by('author')
+    numbered_books = helper_numbered_books_dict(books)
     deleted = True
-    return render(request, 'biblio/book_list.html', {'book_list': books, 'deleted':deleted})
+    return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'deleted':deleted})
 
 def book_search(request):
 	form = BookSearchForm(request.GET)
@@ -89,7 +87,8 @@ def book_search(request):
 			filters['mark'] = search_mark_query
 
 		books = Book.objects.filter(**filters)
-		return render(request, 'biblio/book_search.html', {'form': form, 'book_list': books})
+		numbered_books = helper_numbered_books_dict(books)
+		return render(request, 'biblio/book_search.html', {'form': form, 'book_list': numbered_books})
 
 def lend_book(request, pk):
 	book = get_object_or_404(Book, pk=pk)
@@ -136,14 +135,8 @@ def popup_mark_return_success(request, pk):
 
 def book_library(request):
 	books = Book.objects.filter(source='library').order_by('author')
-	book_dict = {}
-	i = 1
-	for el in books:
-		book_dict[i] = el
-		i += 1
+	numbered_books = helper_numbered_books_dict(books)
 	empty_list = False
 	if len(books) == 0:
 		empty_list = True
-	return render(request, 'biblio/book_list.html', {'book_list': book_dict, 'title': 'Lista książek z biblioteki', 'empty_library_list': empty_list})
-
-
+	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista książek z biblioteki', 'empty_library_list': empty_list})

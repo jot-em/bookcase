@@ -23,7 +23,7 @@
 		<h2>Gatunek</h2>
 		<p>{{ book.kind }}</p>
 		
-		<h2>Kategoria</h2>
+		<h2>Źródło</h2>
 		{% if book.source == "home" %}
 			{% if book.lent_to == None %}
 				<p>{{ book.source }}<a href="pozycz" onclick="return popitup('pozycz')" class="icon-button"><span class="glyphicon glyphicon-share"></span></a></p>

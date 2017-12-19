@@ -1,0 +1,14 @@
+{% extends 'biblio/base.html' %}
+<!-- {% load render_table from django_tables2 %} -->
+{% block content %}
+
+	<h1 class="title">Czy na pewno chcesz usunąć książkę {{ book.author }} ,,<i>{{ book.title }}''</i>?</h1>
+		
+
+	<div class="button-contener">
+		<a href="{% url 'book_delete' pk=book.pk %}" class="button red-button">Usuń</a>
+		<a href="{% url 'book_details' pk=book.pk %}" class="button">Cofnij</a>
+	</div>
+
+{% endblock %}
+

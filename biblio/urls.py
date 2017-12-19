@@ -13,7 +13,10 @@ urlpatterns = [
 	url(r'^ksiazka/(?P<pk>[0-9]+)/zwrocona', views.popup_mark_return_success, name='popup_mark_return_success'),
 	url(r'^ksiazka/dodaj/$', views.book_new, name = 'book_new'),
 	url(r'^ksiazka/edytuj/(?P<pk>[0-9]+)/$', views.book_edit, name = 'book_edit'),
+	url(r'^ksiazka/potwierdz-usuniecie/(?P<pk>[0-9]+)/$', views.book_delete_confirm, name = 'book_delete_confirm'),
 	url(r'^ksiazka/usun/(?P<pk>[0-9]+)/$', views.book_delete, name = 'book_delete'),
 	url(r'^szukaj/$', views.book_search, name='book_search'),
 	url(r'^ksiazki/biblioteka$', views.book_library, name='book_library'),
+
+
 ]

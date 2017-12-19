@@ -18,7 +18,7 @@
 			<a href="{% url 'book_search' %}" class="icon-menu"><span class="glyphicon glyphicon-search"></span></a>
 			<a href="{% url 'book_library' %}" class="icon-menu"><span class="glyphicon glyphicon-leaf"></span></a>
 			<a href="{% url 'book_edit' pk=book.pk %}" class="icon-menu"><span class="glyphicon glyphicon-pencil"></span></a>
-			<a href="{% url 'book_delete' pk=book.pk %}" class="icon-menu"><span class="glyphicon glyphicon-trash"></span></a>
+			<a href="{% url 'book_delete_confirm' pk=book.pk %}" class="icon-menu"><span class="glyphicon glyphicon-trash"></span></a>
 		</div>
 	</head>
 

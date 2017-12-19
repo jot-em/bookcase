@@ -48,6 +48,10 @@ def book_edit(request, pk):
 		form = BookForm(instance=book)
 	return render(request, 'biblio/book_edit.html', {'form': form})
 
+def book_delete_confirm(request, pk):
+	book = get_object_or_404(Book, pk=pk)
+	return render(request, 'biblio/book_confirm_delete.html', {'book': book})
+
 def book_delete(request, pk):
     deleting_book = Book.objects.filter(pk=pk).delete()
     books = Book.objects.all().order_by('author')

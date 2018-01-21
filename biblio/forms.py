@@ -2,7 +2,7 @@ from django import forms
 from .models import Book
 
 class BookForm(forms.ModelForm):
-	source = forms.ChoiceField(choices=Book.SOURCE_CHOICES, label='Skąd masz książkę?')
+	source = forms.ChoiceField(choices=Book.SOURCE_CHOICES, label='Źródło')
 	status = forms.ChoiceField(choices=Book.STATUS_CHOICES, label='Status')
 	mark = forms.ChoiceField(choices=Book.MARK_CHOICES, label='Jak oceniasz książkę?')
 	class Meta:

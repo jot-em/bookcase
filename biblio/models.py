@@ -6,6 +6,7 @@ class Book(models.Model):
     author = models.CharField(max_length=200, verbose_name='Autor')
     title = models.CharField(max_length=200, verbose_name='Tytuł')
     kind = models.CharField(max_length=200, verbose_name='Gatunek')
+    location = models.CharField(max_length=200, null=True, verbose_name='Lokalizacja')
     created_date = models.DateTimeField(
             default=timezone.now, verbose_name='Data dodania')
     loan_date = models.DateField(
@@ -37,3 +38,12 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+class BookLocation(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Nazwa lokalizacji')
+
+    def publish(self):
+        self.save()
+
+
+    def __str__(self):
+        return self.name

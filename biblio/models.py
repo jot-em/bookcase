@@ -34,9 +34,9 @@ class Book(models.Model):
     def publish(self):
         self.save()
 
-
     def __str__(self):
         return self.title
+
 
 class BookLocation(models.Model):
     name = models.CharField(max_length=200, verbose_name='Nazwa lokalizacji')
@@ -44,6 +44,26 @@ class BookLocation(models.Model):
     def publish(self):
         self.save()
 
+    def __str__(self):
+        return self.name
+
+
+class BookKind(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Rodzaj')
+    category = models.CharField(max_length=200, verbose_name='Kategoria')
+
+    def publish(self):
+        self.save()
+
+    def __str__(self):
+        return self.name
+
+
+class BookCategory(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Kategoria')
+
+    def publish(self):
+        self.save()
 
     def __str__(self):
         return self.name

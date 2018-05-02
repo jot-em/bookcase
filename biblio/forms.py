@@ -3,7 +3,6 @@ from .models import Book, BookLocation, BookCategory, BookKind
 from django.db.models.functions import Lower
 
 class BookForm(forms.ModelForm):
-	category = forms.ModelChoiceField(queryset=BookCategory.objects.order_by(Lower('name')), label='Kategoria', to_field_name='name')
 	kind = forms.ModelChoiceField(queryset=BookKind.objects.order_by(Lower('name')), label='Rodzaj', to_field_name='name')
 	source = forms.ChoiceField(choices=Book.SOURCE_CHOICES, label='Źródło')
 	status = forms.ChoiceField(choices=Book.STATUS_CHOICES, label='Status')
@@ -11,13 +10,13 @@ class BookForm(forms.ModelForm):
 	mark = forms.ChoiceField(choices=Book.MARK_CHOICES, label='Jak oceniasz książkę?')
 	class Meta:
 		model = Book
-		#for now I hide category - it will be determined by kind
 		fields = ('author', 'title', 'kind',  'source', 'location', 'loan_date', 'due_date', 'returned_date', 'status', 'notes', 'mark')
 
 class BookSearchForm(BookForm):
 	source = forms.ChoiceField(choices=(('None', ''),)+Book.SOURCE_CHOICES, label='Źródło')
 	status = forms.ChoiceField(choices=(('None', ''),)+Book.STATUS_CHOICES, label='Status')
 	mark = forms.ChoiceField(choices=Book.MARK_CHOICES, label='Ocena')
+	category = forms.ModelChoiceField(queryset=BookCategory.objects.all(), label='Kategoria', to_field_name='name')
 	class Meta:
 		model = Book
 		exclude = ('notes',)

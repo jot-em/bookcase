@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django_tables2 import RequestConfig
-from .models import Book
+from .models import Book, BookKind
 from .tables import BookTable
 from .forms import *
 from .helpers import *
@@ -40,6 +40,7 @@ def book_edit(request, pk):
 	if request.method == "POST":
 		form = BookForm(request.POST, instance=book)
 		if form.is_valid():
+			book.category = BookKind.objects.filter(name=book.kind).get().category
 			book = form.save(commit=False)
 			book.created_date = timezone.now()
 			book.save()
@@ -65,7 +66,9 @@ def book_search(request):
 	if request.method == "GET":
 		search_author_query = request.GET.get('author')
 		search_title_query = request.GET.get('title')
+		search_category_query = request.GET.get('category')
 		search_kind_query = request.GET.get('kind')
+		search_location_query = request.GET.get('location')
 		search_source_query = request.GET.get('source')
 		search_status_query = request.GET.get('status')
 		search_mark_query = request.GET.get('mark')
@@ -78,8 +81,14 @@ def book_search(request):
 		if search_title_query != '':
 			filters['title'] = search_title_query
 
+		if search_category_query != '':
+			filters['category'] = search_category_query
+
 		if search_kind_query != '':
 			filters['kind'] = search_kind_query
+
+		if search_location_query != '':
+			filters['location'] = search_location_query
 
 		if search_source_query != 'None':
 			filters['source'] = search_source_query

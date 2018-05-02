@@ -5,7 +5,8 @@ from django.db import models
 class Book(models.Model):
     author = models.CharField(max_length=200, verbose_name='Autor')
     title = models.CharField(max_length=200, verbose_name='Tytuł')
-    kind = models.CharField(max_length=200, verbose_name='Gatunek')
+    category = models.CharField(max_length=200, null=True, verbose_name='Kategoria')
+    kind = models.CharField(max_length=200, verbose_name='Rodzaj')
     location = models.CharField(max_length=200, null=True, verbose_name='Lokalizacja')
     created_date = models.DateTimeField(
             default=timezone.now, verbose_name='Data dodania')

@@ -1,13 +1,16 @@
 from django import forms
-from .models import Book, BookLocation
+from .models import Book, BookLocation, BookCategory, BookKind
 
 class BookForm(forms.ModelForm):
+	category = forms.ModelChoiceField(queryset=BookCategory.objects.all(), label='Kategoria', to_field_name='name')
+	kind = forms.ModelChoiceField(queryset=BookKind.objects.all(), label='Rodzaj', to_field_name='name')
 	source = forms.ChoiceField(choices=Book.SOURCE_CHOICES, label='Źródło')
 	status = forms.ChoiceField(choices=Book.STATUS_CHOICES, label='Status')
-	location = forms.ModelChoiceField(queryset=BookLocation.objects.all(), label='Lokalizacja', to_field_name="name", required=False)
+	location = forms.ModelChoiceField(queryset=BookLocation.objects.all(), label='Lokalizacja', to_field_name='name', required=False)
 	mark = forms.ChoiceField(choices=Book.MARK_CHOICES, label='Jak oceniasz książkę?')
 	class Meta:
 		model = Book
+		#for now I hide category - it will be determined by kind
 		fields = ('author', 'title', 'kind',  'source', 'location', 'loan_date', 'due_date', 'returned_date', 'status', 'notes', 'mark')
 
 class BookSearchForm(BookForm):

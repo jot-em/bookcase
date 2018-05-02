@@ -1,12 +1,13 @@
 from django import forms
 from .models import Book, BookLocation, BookCategory, BookKind
+from django.db.models.functions import Lower
 
 class BookForm(forms.ModelForm):
-	category = forms.ModelChoiceField(queryset=BookCategory.objects.all(), label='Kategoria', to_field_name='name')
-	kind = forms.ModelChoiceField(queryset=BookKind.objects.all(), label='Rodzaj', to_field_name='name')
+	category = forms.ModelChoiceField(queryset=BookCategory.objects.order_by(Lower('name')), label='Kategoria', to_field_name='name')
+	kind = forms.ModelChoiceField(queryset=BookKind.objects.order_by(Lower('name')), label='Rodzaj', to_field_name='name')
 	source = forms.ChoiceField(choices=Book.SOURCE_CHOICES, label='Źródło')
 	status = forms.ChoiceField(choices=Book.STATUS_CHOICES, label='Status')
-	location = forms.ModelChoiceField(queryset=BookLocation.objects.all(), label='Lokalizacja', to_field_name='name', required=False)
+	location = forms.ModelChoiceField(queryset=BookLocation.objects.order_by(Lower('name')), label='Lokalizacja', to_field_name='name', required=False)
 	mark = forms.ChoiceField(choices=Book.MARK_CHOICES, label='Jak oceniasz książkę?')
 	class Meta:
 		model = Book

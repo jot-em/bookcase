@@ -10,14 +10,22 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def book_list(request):
-	books = Book.objects.all().order_by('author')
+	books = Book.objects.exclude(source='library').order_by('author')
 	numbered_books = helper_numbered_books_dict(books)
-	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista wszystkich książek'})
+	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista książek - dom'})
 
 def book_table(request):
 	table = BookTable(Book.objects.all())
 	RequestConfig(request, paginate={'per_page':15}).configure(table)
-	return render(request, 'biblio/book_table.html', {'book_table': table})
+	return render(request, 'biblio/book_table.html', {'book_table': table, 'title': 'Lista wszystkich książek'})
+
+def book_library(request):
+	books = Book.objects.filter(source='library').order_by('author')
+	numbered_books = helper_numbered_books_dict(books)
+	empty_list = False
+	if len(books) == 0:
+		empty_list = True
+	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista książek z biblioteki', 'empty_library_list': empty_list})
 
 def book_details(request, pk):
 	book = get_object_or_404(Book, pk=pk)
@@ -145,11 +153,3 @@ def popup_lend_success(request, pk):
 
 def popup_mark_return_success(request, pk):
 	return render(request, 'biblio/popup_success.html', {'message': 'Książka została zwrócona!'})
-
-def book_library(request):
-	books = Book.objects.filter(source='library').order_by('author')
-	numbered_books = helper_numbered_books_dict(books)
-	empty_list = False
-	if len(books) == 0:
-		empty_list = True
-	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista książek z biblioteki', 'empty_library_list': empty_list})

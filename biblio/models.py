@@ -32,6 +32,15 @@ class Book(models.Model):
         ('3', 'Dość interesująca'), ('4', 'Podobała mi się'), ('5', 'Rewelacyjna!'))
     mark = models.CharField(max_length=1, default='0', verbose_name='Ocena')
 
+    def source_verbose(self):
+        return dict(Book.SOURCE_CHOICES)[self.source]
+
+    def status_verbose(self):
+        return dict(Book.STATUS_CHOICES)[self.status]
+
+    def mark_verbose(self):
+        return dict(Book.MARK_CHOICES)[self.mark]
+
     def publish(self):
         self.save()
 

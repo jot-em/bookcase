@@ -26,16 +26,16 @@
 		<h2>Źródło</h2>
 		{% if book.source == "home" %}
 			{% if book.lent_to == None %}
-				<p>{{ book.source }}<a href="pozycz" onclick="return popitup('pozycz')" class="icon-button"><span class="glyphicon glyphicon-share"></span></a></p>
+				<p>{{ book.source_verbose }}<a href="pozycz" onclick="return popitup('pozycz')" class="icon-button"><span class="glyphicon glyphicon-share"></span></a></p>
 			{% else %}
-				<p>{{ book.source }}</p>
+				<p>{{ book.source_verbose }}</p>
 				<h2>Osoba, która pożyczyła</h2>
 				<p>{{ book.lent_to }}<a href="przyjmij_zwrot" onclick="return popitup('przyjmij_zwrot')" class="icon-button"><span class="glyphicon glyphicon-check"></span></a></p>
 				<h2>Data pożyczenia</h2>
 				<p>{{ book.lent_date }}</p>
 			{% endif %}
 		{% else %}
-			<p>{{ book.source }}
+			<p>{{ book.source_verbose }}
 		{% endif %}
 		
 		{% if book.source == "library" or book.source == "borrowed"%}
@@ -69,7 +69,7 @@
 		<p>{{ book.location }}</p>
 
 		<h2>Status</h2>
-		<p>{{ book.status }}</p>	
+		<p>{{ book.status_verbose }}</p>
 
 		<h2>Notatki</h2>
 		<p>{{ book.notes }}</p>

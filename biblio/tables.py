@@ -7,7 +7,7 @@ class BookTable(tables.Table):
 	class Meta:
 		model = Book
 		template = 'django_tables2/bootstrap.html'
-		fields = ('row_number', 'author', 'title', 'kind', 'created_date', 'loan_date', 'due_date', 'returned_date', 'lent_to', 'lent_date', 'lent_back_date', 'source', 'status', 'mark')
+		fields = ('row_number', 'author', 'title', 'kind', 'created_date', 'loan_date', 'due_date', 'returned_date', 'lent_to', 'lent_date', 'lent_back_date', 'source', 'location', 'status', 'mark')
 		
 	def __init__(self, *args, **kwargs):
 		super(BookTable, self).__init__(*args, **kwargs)

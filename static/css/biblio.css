@@ -5,6 +5,25 @@
     padding: 10px 20px 10px 20px;
 }
 
+.login-info {
+    color: #003300;
+    background-color: orange;
+    margin-bottom: 0;
+    float: right;
+    padding: 10px 20px 0px 0px;
+}
+
+.login-info a, .login-info a:visited, .login-info a:active {
+    color: green;
+    padding-left: 15px; 
+    text-decoration: none;
+    text-align: center;
+}
+
+.login-info a:hover {
+    color: #ffffff;
+}
+
 .menu {
     background-color: orange;
     margin-top: 0;
@@ -36,7 +55,6 @@ h1 a {
 
 .checked {
 	color: orange;
-
 }
 
 .icon-button {
@@ -45,7 +63,7 @@ h1 a {
 }
 
  .button {
-    background-color: #555555;
+    background-color: #555555 /*green*/;
     border: none;
     color: white;
     padding: 15px 32px;

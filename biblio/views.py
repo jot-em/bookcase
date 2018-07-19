@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django_tables2 import RequestConfig
@@ -8,17 +10,19 @@ from .helpers import *
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
+@login_required(login_url='/logowanie/')
 def book_list(request):
 	books = Book.objects.exclude(source='library').order_by('author')
 	numbered_books = helper_numbered_books_dict(books)
 	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista książek - dom'})
 
+@login_required(login_url='/logowanie/')
 def book_table(request):
 	table = BookTable(Book.objects.all())
 	RequestConfig(request, paginate={'per_page':15}).configure(table)
 	return render(request, 'biblio/book_table.html', {'book_table': table, 'title': 'Lista wszystkich książek'})
 
+@login_required(login_url='/logowanie/')
 def book_library(request):
 	books = Book.objects.filter(source='library').order_by('author')
 	numbered_books = helper_numbered_books_dict(books)
@@ -27,10 +31,12 @@ def book_library(request):
 		empty_list = True
 	return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'title': 'Lista książek z biblioteki', 'empty_library_list': empty_list})
 
+@login_required(login_url='/logowanie/')
 def book_details(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	return render(request, 'biblio/book_details.html', {'book': book})
 
+@login_required(login_url='/logowanie/')
 def book_new(request):
 	if request.method == "POST":
 		form = BookForm(request.POST)
@@ -43,6 +49,7 @@ def book_new(request):
 		form = BookForm()
 	return render(request, 'biblio/book_new.html', {'form': form})
 
+@login_required(login_url='/logowanie/')
 def book_edit(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	if request.method == "POST":
@@ -57,10 +64,12 @@ def book_edit(request, pk):
 		form = BookForm(instance=book)
 	return render(request, 'biblio/book_edit.html', {'form': form})
 
+@login_required(login_url='/logowanie/')
 def book_delete_confirm(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	return render(request, 'biblio/book_confirm_delete.html', {'book': book})
 
+@login_required(login_url='/logowanie/')
 def book_delete(request, pk):
     deleting_book = Book.objects.filter(pk=pk).delete()
     books = Book.objects.all().order_by('author')
@@ -68,6 +77,7 @@ def book_delete(request, pk):
     deleted = True
     return render(request, 'biblio/book_list.html', {'book_list': numbered_books, 'deleted':deleted})
 
+@login_required(login_url='/logowanie/')
 def book_search(request):
 	form = BookSearchForm(request.GET)
 	books = Book.objects.all().order_by('author')
@@ -111,6 +121,7 @@ def book_search(request):
 		numbered_books = helper_numbered_books_dict(books)
 		return render(request, 'biblio/book_search.html', {'form': form, 'book_list': numbered_books})
 
+@login_required(login_url='/logowanie/')
 def lend_book(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	if request.method == "POST":
@@ -123,6 +134,7 @@ def lend_book(request, pk):
 		form = BookLendForm(instance=book, initial={'lent_date':timezone.now()})
 	return render(request, 'biblio/popup.html', {'form': form, 'title': 'Pożycz książkę'})
 
+@login_required(login_url='/logowanie/')
 def mark_return_book(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	if request.method == "POST":
@@ -136,6 +148,7 @@ def mark_return_book(request, pk):
 		form = BookLendBackForm(instance=book, initial={'lent_back_date':timezone.now()})
 	return render(request, 'biblio/popup.html', {'form': form, 'title': 'Zaznacz zwrot'})
 
+@login_required(login_url='/logowanie/')
 def return_book(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	if request.method == "POST":
@@ -148,8 +161,10 @@ def return_book(request, pk):
 		form = BookReturnForm(instance=book, initial={'returned_date':timezone.now()})
 	return render(request, 'biblio/popup.html', {'form': form, 'title': 'Oddaj książkę'})
 
+@login_required(login_url='/logowanie/')
 def popup_lend_success(request, pk):
 	return render(request, 'biblio/popup_success.html', {'message': 'Książka została pożyczona!'})
 
+@login_required(login_url='/logowanie/')
 def popup_mark_return_success(request, pk):
 	return render(request, 'biblio/popup_success.html', {'message': 'Książka została zwrócona!'})

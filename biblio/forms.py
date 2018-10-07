@@ -23,7 +23,6 @@ class BookSearchForm(BookForm):
 
 	def __init__(self, *args, **kwargs):
 		super(BookSearchForm, self).__init__(*args, **kwargs)
-		print(self.fields)
 		self.fields['loan_date_from']=forms.DateField(label='Data wypożyczenia od')
 		for key, field in self.fields.items():
 			self.fields[key].required = False

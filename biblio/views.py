@@ -90,34 +90,40 @@ def book_search(request):
 		search_source_query = request.GET.get('source')
 		search_status_query = request.GET.get('status')
 		search_mark_query = request.GET.get('mark')
-		
+
 		filters = {}
 
-		if search_author_query != '':
+		if search_author_query != '' and search_author_query != None:
 			filters['author'] = search_author_query
 
-		if search_title_query != '':
+		if search_title_query != '' and  search_title_query != None:
 			filters['title'] = search_title_query
 
-		if search_category_query != '':
+		if search_category_query != '' and search_category_query != None:
 			filters['category'] = search_category_query
 
-		if search_kind_query != '':
+		if search_kind_query != '' and search_kind_query != None:
 			filters['kind'] = search_kind_query
 
-		if search_location_query != '':
+		if search_location_query != '' and search_location_query != None:
 			filters['location'] = search_location_query
 
-		if search_source_query != 'None':
+		if search_source_query != 'None' and search_source_query != None:
 			filters['source'] = search_source_query
 
-		if search_status_query != 'None':
+		if search_status_query != 'None' and search_status_query != None:
 			filters['status'] = search_status_query
 			
-		if search_mark_query != '0':
+		if search_mark_query != '0' and search_mark_query != None:
 			filters['mark'] = search_mark_query
 
-		books = Book.objects.filter(**filters)
+		kwargs = {}
+
+		for key, value in filters.items():
+			kwargs['{0}__{1}'.format(key, 'contains')] = value
+
+		books = Book.objects.filter(**kwargs)
+
 		numbered_books = helper_numbered_books_dict(books)
 		return render(request, 'biblio/book_search.html', {'form': form, 'book_list': numbered_books})
 

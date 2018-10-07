@@ -19,11 +19,12 @@ class BookSearchForm(BookForm):
 	category = forms.ModelChoiceField(queryset=BookCategory.objects.all(), label='Kategoria', to_field_name='name')
 	class Meta:
 		model = Book
-		exclude = ('notes',)
+		exclude = ('notes', 'loan_date', 'due_date', 'returned_date', 'lent_to', 'lent_date', 'lent_back_date', 'created_date')
 
 	def __init__(self, *args, **kwargs):
 		super(BookSearchForm, self).__init__(*args, **kwargs)
-		self.fields['loan_date_from']=forms.DateField(label='Data wypożyczenia od')
+	#it's necassary only when 'loan_date_from' is included to book search form
+		# self.fields['loan_date_from']=forms.DateField(label='Data wypożyczenia od')
 		for key, field in self.fields.items():
 			self.fields[key].required = False
 

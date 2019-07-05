@@ -111,9 +111,14 @@ TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
+
+DATE_INPUT_FORMATS = ['%d-%m-%Y', '%d.%m.%Y', '%d/%m/%Y', '%Y-%m-%d', '%Y.%m.%d', '%Y/%m/%d']
+
+DATE_FORMAT = 'j E Y'
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)

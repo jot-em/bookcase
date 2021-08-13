@@ -4,8 +4,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 	url(r'^$', views.book_table, name='book_list'),
-    url(r'^logowanie/$', auth_views.login, name='login'),
-    url(r'^wylogowanie/$', auth_views.logout, name='logout'),
+    url(r'^logowanie/$', auth_views.LoginView.as_view(), name='login'),
+    url(r'^wylogowanie/$', auth_views.LogoutView.as_view(), name='logout'),
 	url(r'^ksiazki/$', views.book_list, name='book_list'),
 	url(r'^wykaz/$', views.book_table, name='book_table'),
 	url(r'^ksiazka/(?P<pk>[0-9]+)/$', views.book_details, name='book_details'),
